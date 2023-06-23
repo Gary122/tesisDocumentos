@@ -1,0 +1,209 @@
+import React, { useState } from "react";
+import TreeView from "@mui/lab/TreeView";
+import { styled } from "@mui/material/styles";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import TreeItem, { treeItemClasses } from "@mui/lab/TreeItem";
+import { Grid, Typography, Box, TextField, IconButton } from "@mui/material";
+import SearchIcon from "@mui/icons-material/Search";
+
+const StyledTreeItem = styled(TreeItem)(({ rootNode }) => {
+  const borderColor = "gray";
+
+  return {
+    position: "relative",
+    "&:before": {
+      pointerEvents: "none",
+      content: '""',
+      position: "absolute",
+      width: 32,
+      left: -16,
+      top: 12,
+      borderBottom: !rootNode ? `1px dashed ${borderColor}` : "none"
+    },
+    [`& .${treeItemClasses.group}`]: {
+      marginLeft: 16,
+      paddingLeft: 18,
+      borderLeft: `1px dashed ${borderColor}`
+    }
+  };
+});
+
+const StyledBox = styled(Box)({
+  width: "90%",
+  fontSize: "1.2em",
+  margin: "20px auto",
+  textAlign: "center",
+  "& p": {
+    textAlign: "justify",
+    color: "#000000",
+    fontFamily: "Helvetica Neue",
+    margin: "20px 10px"
+  },
+  maxWidth: "350px",
+  color: "#000000" // Cambia el color del texto a negro
+});
+
+const StyledTreeView = styled(TreeView)({
+  "& .MuiTreeItem-content": {
+    color: "#000000", // Cambiar el color del texto cuando el árbol se despliega
+  },
+});
+
+export default function FileSystemNavigator() {
+  const [searchText, setSearchText] = useState("");
+
+  const handleSearchChange = (event) => {
+    setSearchText(event.target.value);
+  };
+
+  return (
+    <Box >
+      <Grid container spacing={2}>
+        <Grid item xs={12}>
+          {/* Descripción */}
+          <StyledBox>
+            <Typography variant="h5">Descripción</Typography>
+            <Typography variant="body1" fontFamily="Helvetica Neue">
+              Nuestro sitio web es una plataforma diseñada para facilitar la
+              georreferenciación de datos de especies. Con su interfaz fácil de usar
+              y su funcionalidad avanzada, permite a los investigadores,
+              administradores y usuarios administrar y analizar de manera eficiente
+              la información sobre especies.
+            </Typography>
+          </StyledBox>
+        </Grid>
+        <Grid item xs={12}>
+          {/* Contenedor del Árbol y Trabajo académico */}
+          <Box border={1}
+            borderColor="#333333"
+            p={2}
+            borderRadius={2}
+            minHeight="100vh"
+            display="flex"
+            flexDirection="column">
+            <Grid container spacing={2}>
+              <Grid item xs={4}>
+                {/* Árbol filogenético */}
+                <StyledBox>
+                  <Typography variant="h6">Árbol filogenético</Typography>
+                  <TextField
+                    value={searchText}
+                    onChange={handleSearchChange}
+                    placeholder="Buscar..."
+                    variant="outlined"
+                    size="small"
+                    fullWidth
+                    InputProps={{
+                      endAdornment: (
+                        <IconButton>
+                          <SearchIcon />
+                        </IconButton>
+                      )
+                    }}
+                  />
+                </StyledBox>
+                <StyledTreeView
+                  defaultCollapseIcon={<ExpandMoreIcon />}
+                  defaultExpandIcon={<ChevronRightIcon />}
+                  sx={{ height: 240, flexGrow: 1 }}
+                >
+                  {/* Resto del árbol */}
+                  <StyledTreeItem rootNode nodeId="animalia" label="Animalia">
+                    <StyledTreeItem nodeId="acanthocephala" label="Acanthocephala" />
+                    <StyledTreeItem nodeId="annelida" label="Annelida" />
+                    <StyledTreeItem nodeId="arthropoda" label="Arthropoda">
+                      <StyledTreeItem nodeId="arachnida" label="Arachnida" />
+                      <StyledTreeItem nodeId="chilopoda" label="Chilopoda" />
+                      <StyledTreeItem nodeId="crustacea" label="Crustacea" />
+                      <StyledTreeItem nodeId="diplopoda" label="Diplopoda" />
+                      <StyledTreeItem nodeId="insecta" label="Insecta">
+                        <StyledTreeItem nodeId="blattodea" label="Blattodea" />
+                        <StyledTreeItem nodeId="coleoptera" label="Coleoptera" />
+                        <StyledTreeItem nodeId="dermaptera" label="Dermaptera" />
+                        <StyledTreeItem nodeId="diptera" label="Dipetara">
+                          {/* Subnivel */}
+                          <StyledTreeItem nodeId="dermaptera1" label="Acanthomeridae" />
+                          <StyledTreeItem nodeId="dermaptera2" label="Acartophthalmidae" />
+                          <StyledTreeItem nodeId="dermaptera3" label="Acroceridae" />
+                          <StyledTreeItem nodeId="dermaptera4" label="Agromyzidae" />
+                          <StyledTreeItem nodeId="diptera_subnivel2" label="Drosophilidae ">
+                            {/* Agrega nodos adicionales aquí */}
+                            <StyledTreeItem nodeId="Collessia" label="Collessia" />
+                            <StyledTreeItem nodeId="Dettopsomyia" label="Dettopsomyia" />
+                            <StyledTreeItem nodeId="diptera_subnivel3" label="Drosophila ">
+                              {/* Agrega nodos adicionales aquí */}
+                              <StyledTreeItem nodeId="amaguana" label="neoamaguana" />
+                              <StyledTreeItem nodeId="aracataca" label="aracataca" />
+                              <StyledTreeItem nodeId="araicas" label="araicas" />
+                              <StyledTreeItem nodeId="bromelioides" label="bromelioides" />
+                              <StyledTreeItem nodeId="canalinea" label="canalinea" />
+                              <StyledTreeItem nodeId="cardini" label="cardini" />
+                              <StyledTreeItem nodeId="cardinoides" label="cardinoides" />
+                              <StyledTreeItem nodeId="cashapamba" label="cashapamba" />
+                              <StyledTreeItem nodeId="caxarumi" label="caxarumi">
+                                {/* Agrega nodos adicionales aquí */}
+
+                              </StyledTreeItem>
+
+                            </StyledTreeItem>
+
+                          </StyledTreeItem>
+                        </StyledTreeItem>
+                        {/* Agrega más nodos de orden aquí */}
+                      </StyledTreeItem>
+                      <StyledTreeItem nodeId="merostomata" label="Merostomata" />
+                      <StyledTreeItem nodeId="myriapoda" label="Myriapoda" />
+                      {/* Agrega más nodos de clase aquí */}
+                    </StyledTreeItem>
+                    <StyledTreeItem nodeId="brachiopoda" label="Brachiopoda" />
+                    <StyledTreeItem nodeId="bryozoa" label="Bryozoa" />
+                    <StyledTreeItem nodeId="cephalorhyncha" label="Cephalorhyncha" />
+                    <StyledTreeItem nodeId="chaetognatha" label="Chaetognatha" />
+                    <StyledTreeItem nodeId="chordata" label="Chordata">
+                      <StyledTreeItem nodeId="agnatha" label="Agnatha" />
+                      <StyledTreeItem nodeId="gnathostomata" label="Gnathostomata" />
+                      <StyledTreeItem nodeId="gnathostomulida" label="Gnathostomulida" />
+                      {/* Agrega más nodos de clase aquí */}
+                    </StyledTreeItem>
+                    {/* Agrega más nodos de filo aquí */}
+                  </StyledTreeItem>
+                  <StyledTreeItem rootNode nodeId="fungi" label="Fungi">
+                    <StyledTreeItem nodeId="ascomycota" label="Ascomycota" />
+                    <StyledTreeItem nodeId="basidiomycota" label="Basidiomycota" />
+                    {/* Agrega más nodos de filo aquí */}
+                  </StyledTreeItem>
+                  <StyledTreeItem rootNode nodeId="moner" label="Moner">
+                    <StyledTreeItem nodeId="archaea" label="Archaea" />
+                    <StyledTreeItem nodeId="bacteria" label="Bacteria" />
+                    {/* Agrega más nodos de filo aquí */}
+                  </StyledTreeItem>
+                  <StyledTreeItem rootNode nodeId="plantae" label="Plantae">
+                    <StyledTreeItem nodeId="bryophyta" label="Bryophyta" />
+                    <StyledTreeItem nodeId="lycophyta" label="Lycophyta" />
+                    {/* Agrega más nodos de filo aquí */}
+                  </StyledTreeItem>
+                  <StyledTreeItem rootNode nodeId="protista" label="Protista">
+                    <StyledTreeItem nodeId="amoebazoa" label="Amoebozoa" />
+                    <StyledTreeItem nodeId="chromalveolata" label="Chromalveolata" />
+                    {/* Agrega más nodos de filo aquí */}
+                    {/* Nodos del árbol */}
+                  </StyledTreeItem>
+                </StyledTreeView>
+              </Grid>
+              <Grid item xs={8}>
+                {/* Trabajo académico */}
+                <Box >
+                  <StyledBox>
+                    <Typography variant="h6">Investigaciones</Typography>
+                    {/* Contenido del trabajo académico */}
+                  </StyledBox>
+                </Box>
+              </Grid>
+            </Grid>
+          </Box>
+        </Grid>
+      </Grid>
+    </Box>
+  );
+}

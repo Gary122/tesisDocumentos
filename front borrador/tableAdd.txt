@@ -1,0 +1,93 @@
+import React, { useState } from 'react';
+import { Button, ButtonGroup, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography, Paper, Container, CssBaseline } from '@mui/material';
+import { styled } from '@mui/system';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
+import ResearchIcon from '@mui/icons-material/Science';
+import BuildIcon from '@mui/icons-material/Build';
+import SaveIcon from '@mui/icons-material/Save';
+
+// Crear un tema personalizado
+const theme = createTheme({
+  palette: {
+    background: {
+      default: '#cfd8dc',
+    },
+  },
+});
+
+const StyledTableCell = styled(TableCell)(({ theme }) => ({
+  backgroundColor: '#e0f7fa',
+  color: theme.palette.common.black,
+}));
+
+const StyledTableRow = styled(TableRow)(({ theme }) => ({
+  '&:nth-of-type(odd)': {
+    backgroundColor: '#e5ffff',
+  },
+  '&:nth-of-type(even)': {
+    backgroundColor: '#ffffff',
+  },
+}));
+
+const StyledButton = styled(Button)(({ theme }) => ({
+  margin: '0 5px',
+}));
+
+const users = [
+  { id: 1, name: 'Juan Araque', email: 'jaraque129@puce.edu.ec' },
+  { id: 2, name: 'Usuario Puce', email: 'usuario@puce.edu.ec' },
+  { id: 3, name: 'Usuario Puce', email: 'usuario@puce.edu.ec' },
+  { id: 4, name: 'Usuario Puce', email: 'usuario@puce.edu.ec' },
+  { id: 5, name: 'Usuario Puce', email: 'usuario@puce.edu.ec' },
+];
+
+function RoleAssignment() {
+  const [buttonColors, setButtonColors] = useState(Array(users.length * 3).fill("primary"));
+
+  const handleClick = (index) => {
+    const newButtonColors = [...buttonColors];
+    newButtonColors[index] = newButtonColors[index] === "primary" ? "secondary" : "primary";
+    setButtonColors(newButtonColors);
+  };
+
+  return (
+    <ThemeProvider theme={theme}>
+      <Container component="main" maxWidth="md" sx={{ py: 5, my: 8, boxShadow: 3 }}>
+        <CssBaseline />
+        <Typography variant="h5" align="center" gutterBottom>Asignación de Roles</Typography>
+        <TableContainer component={Paper} sx={{backgroundColor: '#e0f7fa'}}>
+          <Table sx={{ minWidth: 700 }} aria-label="customized table">
+            <TableHead>
+              <TableRow>
+                <StyledTableCell>Usuarios</StyledTableCell>
+                <StyledTableCell>Email</StyledTableCell>
+                <StyledTableCell>Asignar Rol</StyledTableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {users.map((user, index) => (
+                <StyledTableRow key={user.id}>
+                  <StyledTableCell component="th" scope="row">
+                    {user.name}
+                  </StyledTableCell>
+                  <StyledTableCell>{user.email}</StyledTableCell>
+                  <StyledTableCell>
+                    <ButtonGroup variant="text" aria-label="outlined primary button group">
+                      <StyledButton startIcon={<SupervisorAccountIcon />} variant={buttonColors[index*3] === "primary" ? "outlined" : "contained"} color="primary" onClick={() => handleClick(index*3)}>Administrador</StyledButton>
+                      <StyledButton startIcon={<ResearchIcon />} variant={buttonColors[index*3+1] === "primary" ? "outlined" : "contained"} color="primary" onClick={() => handleClick(index*3+1)}>Investigador</StyledButton>
+                      <StyledButton startIcon={<BuildIcon />} variant={buttonColors[index*3+2] === "primary" ? "outlined" : "contained"} color="primary" onClick={() => handleClick(index*3+2)}>Técnico</StyledButton>
+                    </ButtonGroup>
+                  </StyledTableCell>
+                </StyledTableRow>
+              ))}
+            </TableBody>
+          </Table>
+          <Button variant="contained" color="primary" startIcon={<SaveIcon />} sx={{ mt: 2, mb: 1, float: 'right' }}>Guardar</Button>
+        </TableContainer>
+      </Container>
+    </ThemeProvider>
+  );
+}
+
+export default RoleAssignment;
